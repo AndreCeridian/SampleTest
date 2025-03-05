@@ -1,13 +1,12 @@
 namespace XUnitTestProject
 {
-    public class UnitTest1
+    public class UnitTest1 : IDisposable
     {
         protected RemoteWebDriver driver;
 
         public UnitTest1()
         {
             DriverOptions capabilities = new ChromeOptions();
-            capabilities.BrowserVersion = "latest";
 
             driver = new RemoteWebDriver(new Uri("http://hub.browserstack.com/wd/hub/"), capabilities);
         }
@@ -16,6 +15,11 @@ namespace XUnitTestProject
         public void Test1()
         {
             driver.Navigate().GoToUrl("https://www.dayforce.com");
+
+            if (driver.Url.Contains("appium.io"))
+            {
+                driver.Navigate().GoToUrl("https://www.dayforce.com");
+            }
 
             Assert.Contains("Dayforce", driver.Title);
         }
