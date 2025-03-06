@@ -26,8 +26,14 @@ namespace XUnitTestProject
 
         public void Dispose()
         {
-            driver.Quit();
-            driver.Dispose();
+            if (driver != null)
+            {
+                driver.Quit();
+                if (driver is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            }
         }
     }
 }
